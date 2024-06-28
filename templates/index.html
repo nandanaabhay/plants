@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Plants Online</title>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Plants Online</h1>
+      <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('login') }}">Login</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h2>Welcome to Plants Online!</h2>
+        <p>Your one-stop shop for beautiful and healthy plants.</p>
+      </section>
+      <section class="featured-plants">
+        <h2>Featured Plants</h2>
+        <div class="plant-list">
+          <div class="plant-item">
+            <img src="{{ url_for('static', filename='aloe_vera.jfif') }}" alt="Aloe Vera">
+            <h3>Aloe Vera</h3>
+            <p>Price: $10</p>
+            <p>Advantages: Improves air quality and has healing properties.</p>
+          </div>
+          <div class="plant-item">
+            <img src="{{ url_for('static', filename='spider_plant.jfif') }}" alt="Spider Plant">
+            <h3>Spider Plant</h3>
+            <p>Price: $15</p>
+            <p>Advantages: Great for improving indoor air quality.</p>
+          </div>
+          <div class="plant-item">
+            <img src="{{ url_for('static', filename='peace_lily.jfif') }}" alt="Peace Lily">
+            <h3>Peace Lily</h3>
+            <p>Price: $20</p>
+            <p>Advantages: Known for its air-purifying qualities.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Plants Online. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

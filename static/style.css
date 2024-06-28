@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  header {
+    background: #35424a;
+    color: #ffffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+  }
+  
+  header h1 {
+    float: left;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  header nav {
+    float: right;
+    margin-top: 10px;
+  }
+  
+  header nav a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 5px 20px;
+  }
+  
+  header nav a:hover {
+    background: #e8491d;
+    color: #ffffff;
+  }
+  
+  main {
+    padding: 20px;
+    background: #ffffff;
+  }
+  
+  footer {
+    background: #35424a;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+  }
+  
+  .plant-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .plant-item {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    text-align: center;
+  }
+  
+  .plant-item img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .buy-button, .contact-button, .login-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #e8491d;
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .buy-button:hover, .contact-button:hover, .login-button:hover {
+    background: #35424a;
+  }
+  
