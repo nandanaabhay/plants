@@ -1,7 +1,63 @@
 from flask import Flask, render_template ,request, redirect , url_for
-from plants_data import plants  
+from plants_data import plants 
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+#TODO: Download & Install MySQL
+#TODO: pip install Flask-MySQLdb
+#TODO: Add your password in ''
+#TODO: Confirm if MySQL is running
+#   -> Press windows + R
+#   -> Type: services.msc
+#   -> Find: MySQL
+#   -> Right click: Start
+#TODO: Go to MySQL command line and run:
+#   -> mysql -u root -p
+#   -> Enter password
+#   -> CREATE DATABASE plants_db;
+#   -> EXIT;
+#TODO: Add '/view_orders' after your localhost url to view orders
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
 
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+from flask_mysqldb import MySQL
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
 app = Flask(__name__)
+
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'plants_db'
+
+mysql = MySQL(app)
+
+with app.app_context():
+
+    def create_table():
+        # Establish a database connection
+        cursor = mysql.connection.cursor()
+
+        # SQL query to create a new table
+        create_table_query = '''
+        CREATE TABLE IF NOT EXISTS orders (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            plant_name VARCHAR(255) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            delivery_address TEXT NOT NULL,
+            phone_number VARCHAR(15) NOT NULL
+        )
+        '''
+        
+        # Execute the SQL command
+        cursor.execute(create_table_query)
+
+        # Commit the changes
+        mysql.connection.commit()
+
+        # Close the cursor
+        cursor.close()
+
+        print("Table created successfully!")
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
 
 @app.route('/')
 def home():
@@ -30,6 +86,14 @@ def buy(plant_name):
         name = request.form['name']
         delivery_address = request.form['delivery_address']
         phone_number = request.form['phone_number']
+        
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+        cursor = mysql.connection.cursor()
+        cursor.execute(''' INSERT INTO orders (plant_name, name, delivery_address, phone_number) VALUES (%s, %s, %s, %s) ''', (plant_name, name, delivery_address, phone_number))
+        mysql.connection.commit()
+        cursor.close()
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
+        
         print(f'Plant: {plant_name}, Name: {name}, Delivery Address: {delivery_address}, Phone Number: {phone_number}')
         return redirect(url_for('products'))
     return render_template('buy.html', plant=plant)
@@ -45,5 +109,23 @@ def product(plant_name):
 def login():
     return render_template('login.html')
 
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+@app.route('/view_orders')
+def view_orders():
+    # Fetch data from MySQL DATABASE
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' SELECT * FROM orders ''')
+    data = cursor.fetchall()
+    cursor.close()
+
+    return render_template('view_orders.html', orders=data)
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
+
+
 if __name__ == '__main__':
+#-----------------------------------------------------BELOW------------------------------------------------------------------
+    with app.app_context():
+        #creates table if not existing
+        create_table()
+#-----------------------------------------------------ABOVE------------------------------------------------------------------
     app.run(debug=True)
